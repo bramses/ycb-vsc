@@ -1,0 +1,75 @@
+{
+  "name": "ycb-vsc",
+  "displayName": "ycb-vsc",
+  "description": "simple vsc ext for ycb",
+  "publisher": "your-commonbase",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.91.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ycb-vsc.highlightCode",
+        "title": "Highlight Code"
+      },
+      {
+        "command": "ycb-vsc.summarizeCode",
+        "title": "Summarize Code"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "YCB VSC Configuration",
+      "properties": {
+        "ycb-vsc.openaiKey": {
+          "type": "string",
+          "default": "",
+          "description": "OpenAI API Key"
+        },
+        "ycb-vsc.ycbKey": {
+          "type": "string",
+          "default": "",
+          "description": "YCB API Key"
+        },
+        "ycb-vsc.ycbUrl": {
+          "type": "string",
+          "default": "",
+          "description": "YCB API URL"
+        },
+        "ycb-vsc.ycbDBPath": {
+          "type": "string",
+          "default": "",
+          "description": "YCB DB Path"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.7",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.91.0",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.9.1",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "axios": "^1.7.7"
+  }
+}
