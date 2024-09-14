@@ -1,5 +1,7 @@
 # ycb-vsc
 
+video: https://www.youtube.com/watch?v=GMFN-XxNOSE
+
 highlight code:
  takes highlighted code and converts it to a markdown code block with the language specified and summary of the code block then sends it to the ycb api
 
