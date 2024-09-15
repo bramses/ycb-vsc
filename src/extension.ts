@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
             const formattedText = `\`\`\`${language}\n${text}\n\`\`\``;
 
             const description = await getGPTDescription(formattedText);
-            await sendToDescriptionEndpoint(formattedText, description);
+            await sendToDescriptionEndpoint(text, formattedText, description, language);
         }
     });
 
@@ -74,7 +74,7 @@ async function getGPTSummary(code: string): Promise<string> {
 }
 
 // Function to send data to the endpoint
-async function sendToDescriptionEndpoint(code: string, description: string) {
+async function sendToDescriptionEndpoint(code: string, formattedText: string, description: string, language: string) {
     const ycbKey = vscode.workspace.getConfiguration('ycb-vsc').get('ycbKey');
     const ycbUrl = vscode.workspace.getConfiguration('ycb-vsc').get('ycbUrl');
 	const ycbDBPath = vscode.workspace.getConfiguration('ycb-vsc').get('ycbDBPath');
@@ -83,10 +83,12 @@ async function sendToDescriptionEndpoint(code: string, description: string) {
     const fileName = editor?.document.fileName;
 
     await axios.post(`${ycbUrl}/add`, {
-        data: `${description}\n\n${code}`,
+        data: `${description}\n\n${formattedText}`,
 		metadata: {
 			title: fileName,
-			author: filePath,
+			author: "file://" + filePath,
+            language,
+            code
 		},
 		dbPath: ycbDBPath,
 		apiKey: ycbKey,
@@ -105,7 +107,7 @@ async function sendToSummaryEndpoint(description: string) {
         data: `${description}`,
 		metadata: {
 			title: fileName,
-			author: filePath,
+			author: "file://" + filePath,
 		},
 		dbPath: ycbDBPath,
 		apiKey: ycbKey,
